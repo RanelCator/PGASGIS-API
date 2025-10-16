@@ -7,6 +7,7 @@ import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
 import { User, UserSchema } from '../users/schema/user.schema';
 import { SqlService } from '../shared/sql.service';
+import { JwtStrategy } from './strategies/jwt.strategy';
 
 @Module({
   imports: [
@@ -22,7 +23,7 @@ import { SqlService } from '../shared/sql.service';
     }),
   ],
   controllers: [AuthController],
-  providers: [AuthService, SqlService],
+  providers: [AuthService, SqlService, JwtStrategy],
   exports: [AuthService], // optional, if other modules need it
 })
 export class AuthModule {}

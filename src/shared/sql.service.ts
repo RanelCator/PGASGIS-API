@@ -15,15 +15,15 @@ export class SqlService implements OnModuleInit, OnModuleDestroy {
         database: this.config.get<string>('SQLSERVER_DB'),
         server: this.config.get<string>('SQLSERVER_HOST'),
         options: {
-          encrypt: true,               // Required for Azure
-          trustServerCertificate: true // Needed for local/self-signed certs
+          encrypt: true,               
+          trustServerCertificate: true 
         },
         authentication: {
           type: 'ntlm',
           options: {
-            domain: this.config.get<string>('SQLSERVER_DOMAIN') || '', // your Windows domain (if any)
-            userName: this.config.get<string>('SQLSERVER_USER') || '', // can be empty if you want "integrated security"
-            password: this.config.get<string>('SQLSERVER_PASS') || '', // optional if domain auth
+            domain: this.config.get<string>('SQLSERVER_DOMAIN') || '', 
+            userName: this.config.get<string>('SQLSERVER_USER') || '', 
+            password: this.config.get<string>('SQLSERVER_PASS') || '', 
           },
         },
       }).connect();

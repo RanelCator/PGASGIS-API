@@ -17,7 +17,7 @@ export class AttributeChildDto {
   })
   @IsString()
   @IsNotEmpty()
-  propertyName: string;
+  description: string;
 }
 
 export class UpdateAttributeDto {

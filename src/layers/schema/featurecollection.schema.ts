@@ -24,11 +24,3 @@ export class FeatureCollection extends Document {
 }
 
 export const FeatureSchema = SchemaFactory.createForClass(FeatureCollection);
-
-FeatureSchema.set('toJSON', {
-  versionKey: false,
-  transform: (_doc, ret: any) => {
-    delete ret.__v; // no TS error now
-    return ret;
-  },
-});
