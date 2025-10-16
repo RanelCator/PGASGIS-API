@@ -29,6 +29,8 @@ cd PGASGIS-API
 npm install
 ```
 
+---
+
 ## Environment Variables
 
 Create a .env file in the root directory:
@@ -38,13 +40,33 @@ Create a .env file in the root directory:
 PORT=3000
 
 # Database configuration
-SQLSERVER_HOST=VM_DB_PMIS.pgas.ph
-SQLSERVER_DB=spms
-SQLSERVER_USER=PGAS\juan.delacruz
-SQLSERVER_PASS=admin123
-SQLSERVER_DOMAIN=PGAS
+SQLSERVER_HOST=
+SQLSERVER_DB=
+SQLSERVER_USER=
+SQLSERVER_PASS=
+SQLSERVER_DOMAIN=
 
 # JWT secret
 JWT_SECRET=your_secret_key
-JWT_EXPIRES_IN=1d
+JWT_EXPIRES_IN=
 ```
+
+---
+
+## API Documentation (Swagger)
+
+Once the app is running, open:
+
+```bash
+http://localhost:3000/api
+```
+
+You’ll find interactive API documentation generated with **Swagger**.
+
+## Building the Project
+Before deploying or serving, build the app:
+
+```bash
+npm run build
+```
+
