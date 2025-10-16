@@ -1,0 +1,1 @@
+{"version":3,"file":"move-item.dto.js","sourceRoot":"","sources":["../../../src/project/dto/move-item.dto.ts"],"names":[],"mappings":";;;;;;;;;;;;AAAA,qDAAuD;AACvD,6CAA8C;AAE9C,MAAa,WAAW;IAOtB,WAAW,CAAS;CACrB;AARD,kCAQC;AADC;IANC,IAAA,qBAAW,EAAC;QACX,OAAO,EAAE,0BAA0B;QACnC,WAAW,EAAE,+DAA+D;KAC7E,CAAC;IACD,IAAA,0BAAQ,GAAE;IACV,IAAA,4BAAU,GAAE;;gDACO"}
