@@ -58,18 +58,26 @@ let LayersService = class LayersService {
         });
     }
     async findByLayerType(layer_type) {
-        const layer = await this.layerModel.findOne({ 'layer.layer_type': layer_type }).exec();
-        if (!layer) {
-            throw new common_1.NotFoundException(new api_response_dto_1.ApiResponse({
-                message: `Layer with layer_type "${layer_type}" not found.`,
-                success: false,
-            }));
+        try {
+            const layers = await this.layerModel.find({ 'layer.layer_type': layer_type }).select('_id layer.description').exec();
+            if (!layers || layers.length === 0) {
+                return new api_response_dto_1.ApiResponse({
+                    message: `No layers found for type: ${layer_type}`,
+                    success: false,
+                });
+            }
+            return new api_response_dto_1.ApiResponse({
+                message: 'Layers fetched successfully',
+                success: true,
+                data: layers,
+            });
         }
-        return new api_response_dto_1.ApiResponse({
-            message: `Layer retrieved successfully.`,
-            success: true,
-            data: layer,
-        });
+        catch (error) {
+            return new api_response_dto_1.ApiResponse({
+                message: error.message || 'Request Failed',
+                success: false,
+            });
+        }
     }
 };
 exports.LayersService = LayersService;

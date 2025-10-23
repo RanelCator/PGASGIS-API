@@ -12,11 +12,44 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.UpdateParentDto = exports.CreateParentDto = void 0;
 const class_validator_1 = require("class-validator");
 const swagger_1 = require("@nestjs/swagger");
+const class_transformer_1 = require("class-transformer");
+class ExternalSourceDto {
+    source;
+    x;
+    y;
+}
+__decorate([
+    (0, swagger_1.ApiProperty)({
+        description: 'URL or endpoint of the external source providing the data',
+        example: 'https://serve.pgas.ph/gisapi/api/v1/file?id=32&d=1760665427',
+    }),
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
+], ExternalSourceDto.prototype, "source", void 0);
+__decorate([
+    (0, swagger_1.ApiPropertyOptional)({
+        description: 'Latitude coordinate field name or mapping key',
+        example: 'latitude',
+    }),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
+], ExternalSourceDto.prototype, "x", void 0);
+__decorate([
+    (0, swagger_1.ApiPropertyOptional)({
+        description: 'Longitude coordinate field name or mapping key',
+        example: 'longitude',
+    }),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.IsString)(),
+    __metadata("design:type", String)
+], ExternalSourceDto.prototype, "y", void 0);
 class CreateParentDto {
     layerId;
     description;
     layerType;
     orderBy;
+    externalSource;
 }
 exports.CreateParentDto = CreateParentDto;
 __decorate([
@@ -52,6 +85,16 @@ __decorate([
     (0, class_validator_1.IsNumber)(),
     __metadata("design:type", Number)
 ], CreateParentDto.prototype, "orderBy", void 0);
+__decorate([
+    (0, swagger_1.ApiPropertyOptional)({
+        description: 'External data source containing URL and coordinate field mapping',
+        type: () => ExternalSourceDto,
+    }),
+    (0, class_validator_1.IsOptional)(),
+    (0, class_validator_1.ValidateNested)(),
+    (0, class_transformer_1.Type)(() => ExternalSourceDto),
+    __metadata("design:type", ExternalSourceDto)
+], CreateParentDto.prototype, "externalSource", void 0);
 class UpdateParentDto {
     description;
     layerType;

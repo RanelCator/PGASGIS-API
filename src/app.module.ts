@@ -9,14 +9,24 @@ import { AuthModule } from './auth/auth.module';
 import { LayersModule } from './layers/layers.module';
 import { FeaturesModule } from './features/features.module';
 import { ProjectModule } from './project/project.module';
+import { ReportModule } from './report/report.module';
+import { QueryModule } from './query/query.module';
+import { ClippingModule } from './clipping/clipping.module';
+import { HealthModule } from './health/health.module';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path';
 
 @Module({
   imports: [
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', 'docs'),
+      serveRoot: '/devdocs', 
+    }),
     ConfigModule.forRoot({
       envFilePath: '.env',
       isGlobal: true,
       validationSchema: Joi.object({
-        DB_URI: Joi.string().uri().required(),  // 🚨 Will throw if missing or invalid
+        DB_URI: Joi.string().uri().required(), 
       }),
     }),
     MongooseModule.forRootAsync({
@@ -31,6 +41,10 @@ import { ProjectModule } from './project/project.module';
     LayersModule,
     FeaturesModule,
     ProjectModule,
+    ReportModule,
+    QueryModule,
+    ClippingModule,
+    HealthModule,
   ],
   controllers: [AppController],
   providers: [AppService],

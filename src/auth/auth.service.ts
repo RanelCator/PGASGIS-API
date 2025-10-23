@@ -1,12 +1,13 @@
+// auth.service.ts
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { LoginDto } from './dto/login.dto';
-import { SqlService } from '../shared/sql.service';
 import { ApiResponse } from 'src/common/dto/api-response.dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { User } from 'src/users/schema/user.schema';
 import { Model } from 'mongoose';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
+import { SqlQueryService } from 'src/query/query.service';
 
 @Injectable()
 export class AuthService {
@@ -14,7 +15,7 @@ export class AuthService {
     constructor(
         @InjectModel(User.name) private userModel: Model<User>,
         private jwtService: JwtService,
-        private sqlService: SqlService,
+        private sqlQueryService: SqlQueryService,
       ) {}
 
     async login(dto: LoginDto): Promise<ApiResponse> {
@@ -23,12 +24,14 @@ export class AuthService {
         // case 1: PGAS = 1 → Authenticate via SQL
         if (IsPGAS === 1) {
           // 1) Query SQL Server
-          const sqlUser = await this.sqlService.GetUserID(username, password);
-          if (!sqlUser) {
-            throw new UnauthorizedException('Invalid username or password.');
+          const response = await this.sqlQueryService.getUserId(username, password);
+
+          if (!response.success || !response.data) {
+            throw new UnauthorizedException(response.message);
           }
-      
-          const sqlId = sqlUser.id; // comes from SQL query
+
+          const sqlId = response.data.eid; // comes from SQL query
+
       
           // 2) Look up in Mongo using pgasID
           const mongoUser = await this.userModel.findOne({ pgasID: sqlId }).lean();

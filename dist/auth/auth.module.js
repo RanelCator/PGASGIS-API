@@ -14,8 +14,8 @@ const config_1 = require("@nestjs/config");
 const auth_controller_1 = require("./auth.controller");
 const auth_service_1 = require("./auth.service");
 const user_schema_1 = require("../users/schema/user.schema");
-const sql_service_1 = require("../shared/sql.service");
 const jwt_strategy_1 = require("./strategies/jwt.strategy");
+const query_module_1 = require("../query/query.module");
 let AuthModule = class AuthModule {
 };
 exports.AuthModule = AuthModule;
@@ -32,9 +32,10 @@ exports.AuthModule = AuthModule = __decorate([
                     signOptions: { expiresIn: config.get('JWT_EXPIRES_IN') },
                 }),
             }),
+            query_module_1.QueryModule,
         ],
         controllers: [auth_controller_1.AuthController],
-        providers: [auth_service_1.AuthService, sql_service_1.SqlService, jwt_strategy_1.JwtStrategy],
+        providers: [auth_service_1.AuthService, jwt_strategy_1.JwtStrategy],
         exports: [auth_service_1.AuthService],
     })
 ], AuthModule);

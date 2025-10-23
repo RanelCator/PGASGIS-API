@@ -47,30 +47,30 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AuthService = void 0;
 const common_1 = require("@nestjs/common");
-const sql_service_1 = require("../shared/sql.service");
 const api_response_dto_1 = require("../common/dto/api-response.dto");
 const mongoose_1 = require("@nestjs/mongoose");
 const user_schema_1 = require("../users/schema/user.schema");
 const mongoose_2 = require("mongoose");
 const jwt_1 = require("@nestjs/jwt");
 const bcrypt = __importStar(require("bcrypt"));
+const query_service_1 = require("../query/query.service");
 let AuthService = class AuthService {
     userModel;
     jwtService;
-    sqlService;
-    constructor(userModel, jwtService, sqlService) {
+    sqlQueryService;
+    constructor(userModel, jwtService, sqlQueryService) {
         this.userModel = userModel;
         this.jwtService = jwtService;
-        this.sqlService = sqlService;
+        this.sqlQueryService = sqlQueryService;
     }
     async login(dto) {
         const { username, password, IsPGAS } = dto;
         if (IsPGAS === 1) {
-            const sqlUser = await this.sqlService.GetUserID(username, password);
-            if (!sqlUser) {
-                throw new common_1.UnauthorizedException('Invalid username or password.');
+            const response = await this.sqlQueryService.getUserId(username, password);
+            if (!response.success || !response.data) {
+                throw new common_1.UnauthorizedException(response.message);
             }
-            const sqlId = sqlUser.id;
+            const sqlId = response.data.eid;
             const mongoUser = await this.userModel.findOne({ pgasID: sqlId }).lean();
             if (!mongoUser) {
                 throw new common_1.UnauthorizedException('User not linked in MongoDB.');
@@ -113,6 +113,6 @@ exports.AuthService = AuthService = __decorate([
     __param(0, (0, mongoose_1.InjectModel)(user_schema_1.User.name)),
     __metadata("design:paramtypes", [mongoose_2.Model,
         jwt_1.JwtService,
-        sql_service_1.SqlService])
+        query_service_1.SqlQueryService])
 ], AuthService);
 //# sourceMappingURL=auth.service.js.map

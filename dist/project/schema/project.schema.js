@@ -27,11 +27,32 @@ __decorate([
 AttributeChild = __decorate([
     (0, mongoose_1.Schema)({ _id: false })
 ], AttributeChild);
+let ExternalSource = class ExternalSource {
+    source;
+    x;
+    y;
+};
+__decorate([
+    (0, mongoose_1.Prop)(),
+    __metadata("design:type", String)
+], ExternalSource.prototype, "source", void 0);
+__decorate([
+    (0, mongoose_1.Prop)(),
+    __metadata("design:type", String)
+], ExternalSource.prototype, "x", void 0);
+__decorate([
+    (0, mongoose_1.Prop)(),
+    __metadata("design:type", String)
+], ExternalSource.prototype, "y", void 0);
+ExternalSource = __decorate([
+    (0, mongoose_1.Schema)({ _id: false })
+], ExternalSource);
 let Item = class Item {
     item_id;
     description;
     layerType;
     orderBy;
+    externalSource;
     attributeChild;
     items;
 };
@@ -51,6 +72,10 @@ __decorate([
     (0, mongoose_1.Prop)(),
     __metadata("design:type", Number)
 ], Item.prototype, "orderBy", void 0);
+__decorate([
+    (0, mongoose_1.Prop)({ type: ExternalSource, default: null }),
+    __metadata("design:type", Object)
+], Item.prototype, "externalSource", void 0);
 __decorate([
     (0, mongoose_1.Prop)({ type: [AttributeChild], default: [] }),
     __metadata("design:type", Array)

@@ -25,7 +25,7 @@ import {
           typeof res === 'string'
             ? res
             : (res as any).message || message;
-        message = 'Request Failed';
+        //message = 'Request Failed';
       } else if (exception instanceof mongoose.Error.ValidationError) {
         status = HttpStatus.BAD_REQUEST;
         message = 'Validation Failed';

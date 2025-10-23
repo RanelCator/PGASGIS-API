@@ -3,11 +3,17 @@ declare class AttributeChild {
     attributeId: string;
     description: string;
 }
+declare class ExternalSource {
+    source: string;
+    x?: string;
+    y?: string;
+}
 declare class Item {
     item_id: string;
     description: string;
     layerType: number;
     orderBy: number;
+    externalSource?: ExternalSource | null;
     attributeChild?: AttributeChild[];
     items?: Item[];
 }

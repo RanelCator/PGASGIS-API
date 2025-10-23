@@ -157,14 +157,22 @@ export class ProjectService {
         const geometry = group.geometry_group.find((geo) => geo.id == geometryId);
         if (!geometry) throw new NotFoundException('Geometry group not found');
 
-        let item_id = new Types.ObjectId().toString();
+        const item_id = dto.layerId || new Types.ObjectId().toString();
+
         const item = {
-          item_id: dto.layerId ? dto.layerId : item_id,
+          item_id,
           description: dto.description,
           layerType: dto.layerType,
           orderBy: dto.orderBy,
+          externalSource: dto.externalSource
+          ? {
+              source: dto.externalSource.source,
+              x: dto.externalSource.x,
+              y: dto.externalSource.y,
+            }
+          : null,
           items: [],             
-          attributeCild: [],
+          attributeChild: [],
         };
 
         if (!dto.parentItemId) {

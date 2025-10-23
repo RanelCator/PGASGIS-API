@@ -51,12 +51,22 @@ const auth_module_1 = require("./auth/auth.module");
 const layers_module_1 = require("./layers/layers.module");
 const features_module_1 = require("./features/features.module");
 const project_module_1 = require("./project/project.module");
+const report_module_1 = require("./report/report.module");
+const query_module_1 = require("./query/query.module");
+const clipping_module_1 = require("./clipping/clipping.module");
+const health_module_1 = require("./health/health.module");
+const serve_static_1 = require("@nestjs/serve-static");
+const path_1 = require("path");
 let AppModule = class AppModule {
 };
 exports.AppModule = AppModule;
 exports.AppModule = AppModule = __decorate([
     (0, common_1.Module)({
         imports: [
+            serve_static_1.ServeStaticModule.forRoot({
+                rootPath: (0, path_1.join)(__dirname, '..', 'docs'),
+                serveRoot: '/devdocs',
+            }),
             config_1.ConfigModule.forRoot({
                 envFilePath: '.env',
                 isGlobal: true,
@@ -76,6 +86,10 @@ exports.AppModule = AppModule = __decorate([
             layers_module_1.LayersModule,
             features_module_1.FeaturesModule,
             project_module_1.ProjectModule,
+            report_module_1.ReportModule,
+            query_module_1.QueryModule,
+            clipping_module_1.ClippingModule,
+            health_module_1.HealthModule,
         ],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService],

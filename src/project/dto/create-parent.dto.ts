@@ -1,5 +1,31 @@
-import { IsString, IsNumber, IsOptional } from 'class-validator';
+import { IsString, IsNumber, IsOptional, ValidateNested } from 'class-validator';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { Type } from 'class-transformer';
+
+class ExternalSourceDto {
+  @ApiProperty({
+    description: 'URL or endpoint of the external source providing the data',
+    example: 'https://serve.pgas.ph/gisapi/api/v1/file?id=32&d=1760665427',
+  })
+  @IsString()
+  source: string;
+
+  @ApiPropertyOptional({
+    description: 'Latitude coordinate field name or mapping key',
+    example: 'latitude',
+  })
+  @IsOptional()
+  @IsString()
+  x?: string;
+
+  @ApiPropertyOptional({
+    description: 'Longitude coordinate field name or mapping key',
+    example: 'longitude',
+  })
+  @IsOptional()
+  @IsString()
+  y?: string;
+}
 
 export class CreateParentDto {
   @ApiPropertyOptional({
@@ -30,6 +56,15 @@ export class CreateParentDto {
   })
   @IsNumber()
   orderBy: number;
+
+  @ApiPropertyOptional({
+    description: 'External data source containing URL and coordinate field mapping',
+    type: () => ExternalSourceDto,
+  })
+  @IsOptional()
+  @ValidateNested()
+  @Type(() => ExternalSourceDto)
+  externalSource?: ExternalSourceDto;
 }
 
 export class UpdateParentDto {

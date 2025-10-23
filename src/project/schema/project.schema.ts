@@ -8,11 +8,19 @@ class AttributeChild {
 }
 
 @Schema({ _id: false })
+class ExternalSource {
+  @Prop() source: string;
+  @Prop() x?: string;
+  @Prop() y?: string;
+}
+
+@Schema({ _id: false })
 class Item {
     @Prop() item_id: string;
     @Prop() description: string;
     @Prop() layerType: number;
     @Prop() orderBy: number;
+    @Prop({ type: ExternalSource, default: null }) externalSource?: ExternalSource | null;
     @Prop({ type: [AttributeChild], default: [] }) attributeChild?: AttributeChild[];
     @Prop({ type: [Object], default: [] }) items?: Item[];
 }

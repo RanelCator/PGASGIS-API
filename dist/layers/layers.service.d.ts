@@ -9,5 +9,5 @@ export declare class LayersService {
     constructor(layerModel: Model<MapLayer>, featureModel: Model<FeatureCollection>);
     create(createLayerDto: CreateLayerDto): Promise<MapLayer>;
     findById(id: string): Promise<ApiResponse>;
-    findByLayerType(layer_type: string): Promise<ApiResponse<MapLayer>>;
+    findByLayerType(layer_type: string): Promise<ApiResponse>;
 }

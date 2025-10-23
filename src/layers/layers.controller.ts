@@ -44,7 +44,7 @@ export class LayersController {
 
     @Get('type/:layer_type')
     @ApiOperation({
-        summary: 'Get layer by type',
+        summary: 'Get layers by type',
         description:
             'Retrieves one or more layers based on the specified `layer_type`. Returns all layers matching the given type.',
     })

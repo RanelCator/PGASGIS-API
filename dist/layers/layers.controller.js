@@ -71,7 +71,7 @@ __decorate([
 __decorate([
     (0, common_1.Get)('type/:layer_type'),
     (0, swagger_1.ApiOperation)({
-        summary: 'Get layer by type',
+        summary: 'Get layers by type',
         description: 'Retrieves one or more layers based on the specified `layer_type`. Returns all layers matching the given type.',
     }),
     (0, swagger_1.ApiParam)({

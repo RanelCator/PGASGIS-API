@@ -52,23 +52,28 @@ export class LayersService {
         });
     }
 
-    async findByLayerType(layer_type: string): Promise<ApiResponse<MapLayer>> {
-      const layer = await this.layerModel.findOne({ 'layer.layer_type': layer_type }).exec();
-  
-      if (!layer) {
-        throw new NotFoundException(
-          new ApiResponse({
-            message: `Layer with layer_type "${layer_type}" not found.`,
-            success: false,
-          }),
-        );
+  async findByLayerType(layer_type: string): Promise<ApiResponse> {
+    try {
+      const layers = await this.layerModel.find({ 'layer.layer_type': layer_type }).select('_id layer.description').exec();
+
+      if (!layers || layers.length === 0) {
+        return new ApiResponse({
+          message: `No layers found for type: ${layer_type}`,
+          success: false,
+        });
       }
-  
+
       return new ApiResponse({
-        message: `Layer retrieved successfully.`,
+        message: 'Layers fetched successfully',
         success: true,
-        data: layer,
+        data: layers,
+      });
+    } catch (error) {
+      return new ApiResponse({
+        message: error.message || 'Request Failed',
+        success: false,
       });
     }
+  }
 
 }

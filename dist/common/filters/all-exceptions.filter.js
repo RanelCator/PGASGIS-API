@@ -26,7 +26,6 @@ let AllExceptionsFilter = class AllExceptionsFilter {
                 typeof res === 'string'
                     ? res
                     : res.message || message;
-            message = 'Request Failed';
         }
         else if (exception instanceof mongoose_1.default.Error.ValidationError) {
             status = common_1.HttpStatus.BAD_REQUEST;
